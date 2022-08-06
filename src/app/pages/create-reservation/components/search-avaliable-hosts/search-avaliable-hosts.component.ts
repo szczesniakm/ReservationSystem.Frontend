@@ -5,8 +5,7 @@ import { AvaliableHostsRequest } from '../../models/avaliable-hosts-request.mode
 
 @Component({
   selector: 'app-search-avaliable-hosts',
-  templateUrl: './search-avaliable-hosts.component.html',
-  styleUrls: ['./search-avaliable-hosts.component.scss']
+  templateUrl: './search-avaliable-hosts.component.html'
 })
 export class SearchAvaliableHostsComponent implements OnInit {
   @Output() onAvaliableHostsSearch = new EventEmitter<AvaliableHostsRequest>();

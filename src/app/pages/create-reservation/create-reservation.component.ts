@@ -5,8 +5,7 @@ import { AvaliableHost } from './models/avaliable-hosts.model';
 
 @Component({
   selector: 'app-create-reservation',
-  templateUrl: './create-reservation.component.html',
-  styleUrls: ['./create-reservation.component.scss']
+  templateUrl: './create-reservation.component.html'
 })
 export class CreateReservationComponent implements OnInit {
   makeReservationForm = new FormGroup({
