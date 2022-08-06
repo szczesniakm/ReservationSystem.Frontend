@@ -14,6 +14,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
 import { ShellComponent } from './core/components/shell/shell.component';
 import { SideMenuComponent } from './core/components/side-menu/side-menu.component';
 import { HeaderComponent } from './core/components/header/header.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HeaderComponent } from './core/components/header/header.component';
     ModalComponent,
     ShellComponent,
     SideMenuComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
