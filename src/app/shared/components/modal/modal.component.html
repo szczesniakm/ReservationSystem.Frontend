@@ -1,0 +1,10 @@
+<div class="fixed top-0 bottom-0 left-0 right-0 z-50 overflow-auto flex align-middle justify-center">
+  <div class="relative bg-white my-auto">
+    <button class="absolute top-8 right-8" (click)="onClose.emit()">Zamknij</button>
+    <div class="px-20 pt-8 pb-14">
+      <h4 class="mb-12 text-gray-600 text-lg">{{title}}</h4>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
+<div class="fixed top-0 bottom-0 left-0 right-0 bg-black opacity-75 z-40"></div>

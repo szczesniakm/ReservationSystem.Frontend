@@ -1,0 +1,49 @@
+<app-search-avaliable-hosts (onAvaliableHostsSearch)="handleAvaliableHostsSearch($event)" class="mb-14 block"></app-search-avaliable-hosts>
+
+<app-avaliable-hosts-list *ngIf="avaliableHosts.length" [avaliableHosts]="avaliableHosts" (onMakeReservationClick)="showMakeReservationModal($event)"></app-avaliable-hosts-list>
+
+<app-modal title="Zarezerwuj stacje" *ngIf="displayModal" (onClose)="displayModal = false">
+  <form [formGroup]="makeReservationForm" class="flex flex-col space-y-6 justify-between items-start">
+    <div class="flex flex-col">
+      <label for="hostName" class="text-gray-600 text-md">
+        Stacja
+      </label>
+      <p class="text-gray-800 text-lg">{{hostName?.value}}</p>
+    </div>
+    <div class="flex space-x-24">
+      <div class="flex flex-col">
+        <label for="hostName" class="text-gray-600 text-md">
+          Od
+        </label>
+        <p class="text-gray-800 text-lg">{{startDate?.value | date: 'short' }}</p>
+      </div>
+      <div class="flex flex-col">
+        <label for="hostName" class="text-gray-600 text-md">
+          Do
+        </label>
+        <p class="text-gray-800 text-lg">{{endDate?.value | date: 'short'}}</p>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-4">
+      <label for="operatingSystem" class="text-gray-600 text-md">
+        System operacyjny <span class="text-red-600">*</span>
+      </label>
+      <select name="operatingSystem" formControlName="operatingSystem" class="p-2 border-gray-200 border-2 rounded bg-white">
+        <option *ngFor="let os of operatingSystemsDictionary" [value]="os.name" class="bg-white">{{os.name}}</option>
+      </select>
+    </div>
+    <p class="text-gray-600 text-sm">Po upłynięciu czasu rezerwacji stacja zostanie wyłączona</p>
+    <div class="w-full flex justify-end">
+      <button class="
+      bg-cyan-600
+      px-4 py-2
+      rounded-md
+      text-white
+      font-medium
+      font-sans"
+      (click)="makeReservation()">
+        Zarezerwuj
+    </button>
+    </div>
+  </form>
+</app-modal>
