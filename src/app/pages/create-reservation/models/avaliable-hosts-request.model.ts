@@ -1,4 +1,4 @@
 export interface AvaliableHostsRequest {
-  from: Date;
-  reservationTime: number;
+  from: string;
+  to: string;
 }

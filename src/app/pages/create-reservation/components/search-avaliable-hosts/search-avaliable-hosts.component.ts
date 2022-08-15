@@ -41,8 +41,9 @@ export class SearchAvaliableHostsComponent implements OnInit {
     }
     const from = new Date(`${this.startDate?.value} ${this.startTime?.value}`);
     const reservationTime = Number(this.reservationTime?.value);
-
-    this.onAvaliableHostsSearch.emit({ from, reservationTime });
+    const to = new Date(from);
+    to.setMinutes(from.getMinutes() + reservationTime);
+    this.onAvaliableHostsSearch.emit({ from: from.toISOString(), to: to.toISOString() });
   }
 
   private initForm(): void {

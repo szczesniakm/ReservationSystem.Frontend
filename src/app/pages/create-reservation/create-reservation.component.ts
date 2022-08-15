@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { tap } from 'rxjs';
 import { AvaliableHostsRequest } from './models/avaliable-hosts-request.model';
 import { AvaliableHost } from './models/avaliable-hosts.model';
+import { MakeReservationRequest } from './models/make-reservation-request.model';
+import { CreateReservationService } from './services/create-reservation.service';
 
 @Component({
   selector: 'app-create-reservation',
@@ -9,21 +12,15 @@ import { AvaliableHost } from './models/avaliable-hosts.model';
 })
 export class CreateReservationComponent implements OnInit {
   makeReservationForm = new FormGroup({
-    startDate: new FormControl('', [Validators.required]),
-    endDate: new FormControl('', [Validators.required]),
+    startDate: new FormControl(new Date(), [Validators.required]),
+    endDate: new FormControl(new Date(), [Validators.required]),
     hostName: new FormControl('', [Validators.required]),
-    operatingSystem: new FormControl('', [Validators.required])
+    osName: new FormControl('', [Validators.required])
   });
 
   displayModal: boolean = false;
   avaliableHosts: AvaliableHost[] = []
-  operatingSystemsDictionary =
-    [
-      { name: 'ArchLinux' },
-      { name: 'Ubuntu Linux' },
-      { name: 'FreeBSD' },
-      { name: 'Windows 10' },
-    ];
+  operatingSystemsDictionary: string[] = [];
 
   avaliableHostsRequest?: AvaliableHostsRequest;
 
@@ -39,37 +36,22 @@ export class CreateReservationComponent implements OnInit {
     return this.makeReservationForm.get("hostName");
   }
 
-  get operatingSystem() {
-    return this.makeReservationForm.get("operatingSystem");
+  get osName() {
+    return this.makeReservationForm.get("osName");
   }
 
-  constructor() { }
+  constructor(private createReservationService: CreateReservationService) { }
 
   ngOnInit(): void {
+    this.createReservationService.getOsDictionary().subscribe(dictionary => this.operatingSystemsDictionary = dictionary);
+    console.log(this.operatingSystemsDictionary);
   }
 
   handleAvaliableHostsSearch(request: AvaliableHostsRequest): void {
-    this.avaliableHostsRequest = request;
-    const endDate = new Date(request.from.getTime());
-    endDate.setMinutes(request.from.getMinutes() + request.reservationTime);
-    this.startDate?.setValue(request.from.toUTCString());
-    this.endDate?.setValue(endDate.toUTCString());
+    this.createReservationService.getAvaliableHosts(request).pipe(tap((x: AvaliableHost[]) => this.avaliableHosts = x)).subscribe();
 
-    this.avaliableHosts = [
-      { hostName: 's1' },
-      { hostName: 's2' },
-      // { hostName: 's3' },
-      // { hostName: 's4' },
-      // { hostName: 's5' },
-      // { hostName: 's6' },
-      // { hostName: 's7' },
-      // { hostName: 's8' },
-      // { hostName: 's9' },
-      // { hostName: 's0' },
-      // { hostName: 'sa' },
-      // { hostName: 'sb' },
-      // { hostName: 'sc' }
-    ];
+    this.startDate?.setValue(new Date(request.from));
+    this.endDate?.setValue(new Date(request.to));
   }
 
   showMakeReservationModal(hostName: string) {
@@ -78,7 +60,16 @@ export class CreateReservationComponent implements OnInit {
   }
 
   makeReservation() {
-    console.log(this.makeReservationForm.value);
+    if(!this.makeReservationForm.valid) {
+      return;
+    }
+    const body: MakeReservationRequest = {
+      hostName: this.hostName?.value!,
+      osName: this.osName?.value!,
+      from: this.startDate?.value?.toISOString()!,
+      to: this.endDate?.value?.toISOString()!
+    };
+    this.createReservationService.makeReservation(body).subscribe( () => console.log("reserved") );
     this.displayModal = false;
   }
 }

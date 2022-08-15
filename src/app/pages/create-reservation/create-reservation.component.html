@@ -28,8 +28,8 @@
       <label for="operatingSystem" class="text-gray-600 text-md">
         System operacyjny <span class="text-red-600">*</span>
       </label>
-      <select name="operatingSystem" formControlName="operatingSystem" class="p-2 border-gray-200 border-2 rounded bg-white">
-        <option *ngFor="let os of operatingSystemsDictionary" [value]="os.name" class="bg-white">{{os.name}}</option>
+      <select name="operatingSystem" formControlName="osName" class="p-2 border-gray-200 border-2 rounded bg-white">
+        <option *ngFor="let os of operatingSystemsDictionary" [value]="os" class="bg-white">{{os}}</option>
       </select>
     </div>
     <p class="text-gray-600 text-sm">Po upłynięciu czasu rezerwacji stacja zostanie wyłączona</p>
