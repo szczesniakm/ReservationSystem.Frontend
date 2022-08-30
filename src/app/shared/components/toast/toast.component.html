@@ -1,0 +1,10 @@
+<div class="fixed top-0 right-0 px-3 py-2 m-16">
+  <div *ngFor="let toast of messages; index as i">
+    <app-toast-message
+      [type]="toast.type"
+      [message]="toast.message"
+      (onClose)="handleOnClose(i)"
+    ></app-toast-message>
+  </div>
+</div>
+

@@ -34,7 +34,9 @@
     </div>
     <p class="text-gray-600 text-sm">Po upłynięciu czasu rezerwacji stacja zostanie wyłączona</p>
     <div class="w-full flex justify-end">
-      <button class="
+      <button
+      type="button"
+      class="
       bg-cyan-600
       px-4 py-2
       rounded-md
@@ -47,3 +49,5 @@
     </div>
   </form>
 </app-modal>
+
+<app-progress-spinner [isLoading]="isLoading"></app-progress-spinner>

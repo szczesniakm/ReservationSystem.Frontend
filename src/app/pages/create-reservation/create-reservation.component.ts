@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
+import { MessageService } from 'src/app/shared/components/toast/services/message.service';
 import { AvaliableHostsRequest } from './models/avaliable-hosts-request.model';
 import { AvaliableHost } from './models/avaliable-hosts.model';
 import { MakeReservationRequest } from './models/make-reservation-request.model';
@@ -18,10 +19,10 @@ export class CreateReservationComponent implements OnInit {
     osName: new FormControl('', [Validators.required])
   });
 
+  isLoading: boolean = false;
   displayModal: boolean = false;
   avaliableHosts: AvaliableHost[] = []
   operatingSystemsDictionary: string[] = [];
-
   avaliableHostsRequest?: AvaliableHostsRequest;
 
   get startDate() {
@@ -40,15 +41,22 @@ export class CreateReservationComponent implements OnInit {
     return this.makeReservationForm.get("osName");
   }
 
-  constructor(private createReservationService: CreateReservationService) { }
+  constructor(
+    private createReservationService: CreateReservationService,
+    private messageService: MessageService)
+  { }
 
   ngOnInit(): void {
     this.createReservationService.getOsDictionary().subscribe(dictionary => this.operatingSystemsDictionary = dictionary);
-    console.log(this.operatingSystemsDictionary);
   }
 
   handleAvaliableHostsSearch(request: AvaliableHostsRequest): void {
-    this.createReservationService.getAvaliableHosts(request).pipe(tap((x: AvaliableHost[]) => this.avaliableHosts = x)).subscribe();
+    this.avaliableHostsRequest = request;
+
+    if(this.avaliableHostsRequest) {
+      this.isLoading = true;
+      this.createReservationService.getAvaliableHosts(this.avaliableHostsRequest).pipe(tap((x: AvaliableHost[]) => this.avaliableHosts = x)).subscribe(() => this.isLoading = false);
+    }
 
     this.startDate?.setValue(new Date(request.from));
     this.endDate?.setValue(new Date(request.to));
@@ -63,13 +71,22 @@ export class CreateReservationComponent implements OnInit {
     if(!this.makeReservationForm.valid) {
       return;
     }
+
     const body: MakeReservationRequest = {
       hostName: this.hostName?.value!,
       osName: this.osName?.value!,
       from: this.startDate?.value?.toISOString()!,
       to: this.endDate?.value?.toISOString()!
     };
-    this.createReservationService.makeReservation(body).subscribe( () => console.log("reserved") );
+
+    this.isLoading = true;
+    this.createReservationService.makeReservation(body).pipe(
+      switchMap(() => {
+        this.messageService.showSuccess(`Pomyslnie zarezerwowano stacje ${body.hostName}!`);
+        return this.createReservationService.getAvaliableHosts(this.avaliableHostsRequest!).pipe(tap((x: AvaliableHost[]) => this.avaliableHosts = x));
+      })
+    ).subscribe(() => this.isLoading = false);
+
     this.displayModal = false;
   }
 }

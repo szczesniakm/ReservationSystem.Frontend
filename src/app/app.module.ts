@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import '@angular/common/locales/global/pl';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,11 @@ import { ShellComponent } from './core/components/shell/shell.component';
 import { SideMenuComponent } from './core/components/side-menu/side-menu.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { LoginComponent } from './pages/login/login.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ProgressSpinnerComponent } from './core/components/progress-spinner/progress-spinner.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
+import { ToastMessageComponent } from './shared/components/toast/components/toast-message/toast-message.component';
+import { UserReservationsComponent } from './pages/user-reservations/user-reservations.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,11 @@ import { LoginComponent } from './pages/login/login.component';
     ShellComponent,
     SideMenuComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    ProgressSpinnerComponent,
+    ToastComponent,
+    ToastMessageComponent,
+    UserReservationsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +45,7 @@ import { LoginComponent } from './pages/login/login.component';
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl-PL' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     DatePipe
   ],
   bootstrap: [AppComponent]
