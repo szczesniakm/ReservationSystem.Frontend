@@ -20,6 +20,7 @@ import { ProgressSpinnerComponent } from './core/components/progress-spinner/pro
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ToastMessageComponent } from './shared/components/toast/components/toast-message/toast-message.component';
 import { UserReservationsComponent } from './pages/user-reservations/user-reservations.component';
+import { ActiveReservationsComponent } from './pages/user-reservations/components/active-reservations/active-reservations.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UserReservationsComponent } from './pages/user-reservations/user-reserv
     ProgressSpinnerComponent,
     ToastComponent,
     ToastMessageComponent,
-    UserReservationsComponent
+    UserReservationsComponent,
+    ActiveReservationsComponent
   ],
   imports: [
     BrowserModule,

@@ -17,10 +17,6 @@ export class ToastComponent implements OnInit{
     this.messageService.getMessagesObservable().subscribe(message => this.messages.push(message));
   }
 
-  addMessage(message: ToastMessage) {
-    this.messages.push(message);
-  }
-
   handleOnClose(id: number) {
     this.messages.splice(id, 1);
   }

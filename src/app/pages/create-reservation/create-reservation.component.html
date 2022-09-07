@@ -1,6 +1,6 @@
 <app-search-avaliable-hosts (onAvaliableHostsSearch)="handleAvaliableHostsSearch($event)" class="mb-14 block"></app-search-avaliable-hosts>
 
-<app-avaliable-hosts-list *ngIf="avaliableHosts.length" [avaliableHosts]="avaliableHosts" (onMakeReservationClick)="showMakeReservationModal($event)"></app-avaliable-hosts-list>
+<app-avaliable-hosts-list (onMakeReservationClick)="showMakeReservationModal($event)"></app-avaliable-hosts-list>
 
 <app-modal title="Zarezerwuj stacje" *ngIf="displayModal" (onClose)="displayModal = false">
   <form [formGroup]="makeReservationForm" class="flex flex-col space-y-6 justify-between items-start">

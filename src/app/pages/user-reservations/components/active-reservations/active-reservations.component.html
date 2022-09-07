@@ -1,0 +1,40 @@
+<h2 class="font-sans text-xl text-gray-800 mb-12">Aktywne rezerwacje</h2>
+
+<div class="flex flex-col flex-wrap">
+  <div *ngFor="let activeReservation of activeReservations" class="p-10 w-min h-min shadow mb-16 mr-14 bg-white flex">
+    <div class="m-5">
+      <h3>Stacja</h3>
+      <p class="font-sans text-lg text-center mt-10">{{activeReservation.hostName}}</p>
+    </div>
+    <div class="m-5">
+      <h3>System operacyjny</h3>
+      <p class="font-sans text-lg text-center mt-10">{{activeReservation.osName}}</p>
+    </div>
+    <div class="m-5">
+      <h3>Status</h3>
+      <p class="font-sans text-lg text-center mt-10">{{activeReservation.status}}</p>
+    </div>
+    <div class="m-5">
+      <h3>Start</h3>
+      <p class="font-sans text-lg text-center mt-10">{{activeReservation.start | date }}</p>
+    </div>
+    <div class="m-5">
+      <h3>Koniec</h3>
+      <p class="font-sans text-lg text-center mt-10">{{activeReservation.end | date }}</p>
+    </div>
+    <div class="m-5">
+      <button class="bg-cyan-600
+    px-6 py-3
+    rounded-md
+    text-white
+    font-medium
+    font-sans">Włącz stacje</button>
+    <button class="bg-red-800
+    px-6 py-3
+    rounded-md
+    text-white
+    font-medium
+    font-sans">Anuluj</button>
+    </div>
+  </div>
+</div>
