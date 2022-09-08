@@ -39,7 +39,7 @@ export class LoginComponent {
       this.router.navigateByUrl('');
     } catch (error: any) {
       console.log(error);
-      this.messageService.showError(error.message);
+      this.messageService.showError(error.error.message);
     }
   }
 }
