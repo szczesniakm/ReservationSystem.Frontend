@@ -15,7 +15,7 @@
       font-medium
       font-sans
       disabled:bg-gray-400"
-      [disabled]="isHostTurnOff(host)"
+      [disabled]="!isHostTurnOff(host)"
       (click)="onHostSelected.emit(host)">Włącz</button>
     </div>
   </div>
