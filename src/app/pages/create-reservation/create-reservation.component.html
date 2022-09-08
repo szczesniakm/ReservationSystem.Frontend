@@ -1,14 +1,13 @@
 <app-avaliable-hosts-list (onHostSelected)="showPowerOnModal($event)"></app-avaliable-hosts-list>
 
 <app-modal title="Zarezerwuj stacje" *ngIf="displayModal" (onClose)="displayModal = false">
-  <form [formGroup]="makeReservationForm" class="flex flex-col space-y-6 justify-between items-start">
+  <form [formGroup]="makeReservationForm" class="flex flex-col space-y-6 justify-between items-start pt-6 pr-20">
     <div class="flex flex-col">
       <label for="hostName" class="text-gray-600 text-md">
         Stacja
       </label>
       <p class="text-gray-800 text-lg">{{hostName?.value}}</p>
     </div>
-    <div class="flex space-x-24">
     <div class="flex flex-col space-y-4">
       <label for="operatingSystem" class="text-gray-600 text-md">
         System operacyjny <span class="text-red-600">*</span>
@@ -17,7 +16,7 @@
         <option *ngFor="let os of operatingSystemsDictionary" [value]="os" class="bg-white">{{os}}</option>
       </select>
     </div>
-    <div class="w-full flex justify-end">
+    <div class="flex justify-end">
       <button
       type="button"
       class="
@@ -26,11 +25,12 @@
       rounded-md
       text-white
       font-medium
-      font-sans"
+      font-sans
+      disabled:bg-gray-400"
+      [disabled]="isOsSelected()"
       (click)="powerOnHost()">
         Włącz
     </button>
-    </div>
     </div>
   </form>
 </app-modal>

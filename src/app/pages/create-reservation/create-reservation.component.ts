@@ -72,4 +72,8 @@ export class CreateReservationComponent implements OnInit {
       catchError(err => of(this.messageService.showError(err.error.message))),
       finalize(() => this.isLoading = false)).subscribe();
   }
+
+  isOsSelected(): boolean {
+    return !this.osName?.valid!;
+  }
 }

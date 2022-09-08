@@ -1,15 +1,22 @@
-<h2 class="font-sans text-xl text-gray-800 mb-12">Dostępne stacje</h2>
+<div class="mt-10 mx-auto w-4/5">
+  <h2 class="font-sans text-xl text-gray-800 mb-12">Stacje</h2>
 
-<div class="flex flex-wrap">
-  <div *ngFor="let host of hosts" class="p-10 w-min h-min shadow mb-16 mr-14 bg-white">
-    <p class="font-sans text-2xl text-center mb-10">{{host.name}}</p>
-    <p class="font-sans text-2xl text-center mb-10">{{host.status}}</p>
-    <button class="bg-cyan-600
-    px-6 py-3
-    rounded-md
-    text-white
-    font-medium
-    font-sans"
-    (click)="onHostSelected.emit(host)">Włącz</button>
+  <div class="flex flex-wrap">
+    <div *ngFor="let host of hosts" class="p-10 w-min h-min shadow mb-16 mr-14 bg-white">
+      <div class="flex justify-center">
+        <p class="font-sans text-2xl text-center mb-10">{{host.name}}</p>
+        <span class="ml-2 h-4 w-4 rounded-full inline-block"
+        [ngClass]="{'bg-green-500': isHostTurnOn(host), 'bg-red-500': isHostTurnOff(host), 'bg-gray-500': isHostUnknown(host), 'bg-yellow-500': isHostSleep(host)}"></span>
+      </div>
+      <button class="bg-cyan-600
+      px-6 py-3
+      rounded-md
+      text-white
+      font-medium
+      font-sans
+      disabled:bg-gray-400"
+      [disabled]="isHostTurnOff(host)"
+      (click)="onHostSelected.emit(host)">Włącz</button>
+    </div>
   </div>
 </div>
