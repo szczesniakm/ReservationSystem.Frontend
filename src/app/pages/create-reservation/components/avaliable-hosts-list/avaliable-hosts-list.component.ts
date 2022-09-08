@@ -15,7 +15,6 @@ export class AvaliableHostsListComponent implements OnInit {
   ngOnInit(): void {
     this.fetchHosts();
     this.hostsService.startConnection();
-    this.hostsService.addHostsListener();
     this.hostsService.hosts.subscribe((hosts) => this.hosts = hosts);
   }
 
