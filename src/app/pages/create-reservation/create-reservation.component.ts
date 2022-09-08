@@ -58,7 +58,7 @@ export class CreateReservationComponent implements OnInit {
         }),
         tap(() => this.isLoading = false))});
 
-    $powerOn.subscribe(() => this.isLoading = false);
+    $powerOn.subscribe().add(() => this.isLoading = false);
 
     this.displayModal = false;
   }
