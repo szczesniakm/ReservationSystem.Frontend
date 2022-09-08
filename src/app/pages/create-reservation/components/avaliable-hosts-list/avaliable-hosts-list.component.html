@@ -5,7 +5,7 @@
     <div *ngFor="let host of hosts" class="p-10 w-min h-min shadow mb-16 mr-14 bg-white">
       <div class="flex justify-center">
         <p class="font-sans text-2xl text-center mb-10">{{host.name}}</p>
-        <span class="ml-2 h-4 w-4 rounded-full inline-block"
+        <span class="ml-2 h-2 w-2 rounded-full inline-block"
         [ngClass]="{'bg-green-500': isHostTurnOn(host), 'bg-red-500': isHostTurnOff(host), 'bg-gray-500': isHostUnknown(host), 'bg-yellow-500': isHostSleep(host)}"></span>
       </div>
       <button class="bg-cyan-600
