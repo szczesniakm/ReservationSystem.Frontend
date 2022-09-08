@@ -44,6 +44,6 @@ export class HostsService {
   }
 
   public powerOnHost(request: PowerOnHostRequest): Observable<void> {
-    return this.http.put<void>(`${this.webApiUrl}/api/hosts/${request.hostName}`, {});
+    return this.http.put<void>(`${this.webApiUrl}/api/hosts/${request.hostName}`, request);
   }
 }
