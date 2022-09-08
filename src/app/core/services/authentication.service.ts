@@ -25,7 +25,7 @@ export class AuthenticationService {
     var headers = new HttpHeaders();
     headers.append("Content-Type", "text/plain");
     return new Promise((resolve, reject) => {
-      this.http.post<LoginResponse>(`${this.webApi}login`, { username, password }).subscribe({
+      this.http.post<LoginResponse>(`${this.webApi}/api/login`, { username, password }).subscribe({
         next: response => {
           this.jwtService.setToken(response.token);
           this.updateStatus();

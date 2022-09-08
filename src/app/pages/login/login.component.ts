@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, switchMap } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
+import { MessageService } from 'src/app/shared/components/toast/services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private jwtService: JwtService,
+    private messageService: MessageService,
     private router: Router) { }
 
   get username(): any {
@@ -38,6 +39,7 @@ export class LoginComponent {
       this.router.navigateByUrl('');
     } catch (error) {
       console.log(error);
+      this.messageService.showError("error");
     }
   }
 }

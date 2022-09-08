@@ -1,21 +1,25 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Host } from 'src/app/core/models/host.model';
-import { SignalrService } from 'src/app/core/services/signalr.service';
+import { HostsService } from 'src/app/core/services/hosts.service';
 
 @Component({
   selector: 'app-avaliable-hosts-list',
   templateUrl: './avaliable-hosts-list.component.html'
 })
 export class AvaliableHostsListComponent implements OnInit {
-  avaliableHosts: Host[] = [];
-  @Output() onMakeReservationClick = new EventEmitter<string>();
+  hosts: Host[] = [];
+  @Output() onHostSelected = new EventEmitter<Host>();
 
-  constructor(private signalRService: SignalrService) { }
+  constructor(private hostsService: HostsService) { }
 
   ngOnInit(): void {
-    this.signalRService.startConnection();
-    this.signalRService.addHostsListener();
-    this.signalRService.hosts.subscribe((hosts) => this.avaliableHosts = hosts);
+    this.fetchHosts();
+    this.hostsService.startConnection();
+    this.hostsService.addHostsListener();
+    this.hostsService.hosts.subscribe((hosts) => this.hosts = hosts);
   }
 
+  fetchHosts(): void {
+    this.hostsService.getHosts().subscribe((hosts) => this.hosts = hosts.hosts);
+  }
 }

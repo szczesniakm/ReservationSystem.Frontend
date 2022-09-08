@@ -1,6 +1,4 @@
-<app-search-avaliable-hosts (onAvaliableHostsSearch)="handleAvaliableHostsSearch($event)" class="mb-14 block"></app-search-avaliable-hosts>
-
-<app-avaliable-hosts-list (onMakeReservationClick)="showMakeReservationModal($event)"></app-avaliable-hosts-list>
+<app-avaliable-hosts-list (onHostSelected)="showPowerOnModal($event)"></app-avaliable-hosts-list>
 
 <app-modal title="Zarezerwuj stacje" *ngIf="displayModal" (onClose)="displayModal = false">
   <form [formGroup]="makeReservationForm" class="flex flex-col space-y-6 justify-between items-start">
@@ -11,19 +9,6 @@
       <p class="text-gray-800 text-lg">{{hostName?.value}}</p>
     </div>
     <div class="flex space-x-24">
-      <div class="flex flex-col">
-        <label for="hostName" class="text-gray-600 text-md">
-          Od
-        </label>
-        <p class="text-gray-800 text-lg">{{startDate?.value | date: 'short' }}</p>
-      </div>
-      <div class="flex flex-col">
-        <label for="hostName" class="text-gray-600 text-md">
-          Do
-        </label>
-        <p class="text-gray-800 text-lg">{{endDate?.value | date: 'short'}}</p>
-      </div>
-    </div>
     <div class="flex flex-col space-y-4">
       <label for="operatingSystem" class="text-gray-600 text-md">
         System operacyjny <span class="text-red-600">*</span>
@@ -32,7 +17,6 @@
         <option *ngFor="let os of operatingSystemsDictionary" [value]="os" class="bg-white">{{os}}</option>
       </select>
     </div>
-    <p class="text-gray-600 text-sm">Po upłynięciu czasu rezerwacji stacja zostanie wyłączona</p>
     <div class="w-full flex justify-end">
       <button
       type="button"
@@ -43,9 +27,10 @@
       text-white
       font-medium
       font-sans"
-      (click)="makeReservation()">
-        Zarezerwuj
+      (click)="powerOnHost()">
+        Włącz
     </button>
+    </div>
     </div>
   </form>
 </app-modal>
