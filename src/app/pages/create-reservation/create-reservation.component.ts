@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { defer, map, tap } from 'rxjs';
+import { catchError, defer, finalize, map, Observable, of, switchMap, tap } from 'rxjs';
 import { Host } from 'src/app/core/models/host.model';
 import { HostsService } from 'src/app/core/services/hosts.service';
 import { MessageService } from 'src/app/shared/components/toast/services/message.service';
@@ -50,15 +50,12 @@ export class CreateReservationComponent implements OnInit {
       hostName: this.hostName?.value!
     };
 
-    let $powerOn = defer(() => {
-      this.isLoading = true;
-      return this.hostsService.powerOnHost(body).pipe(
-        map(() => {
-          this.messageService.showSuccess(`Pomyslnie zarezerwowano stacje ${body.hostName}!`);
-        }),
-        tap(() => this.isLoading = false))});
-
-    $powerOn.subscribe().add(() => this.isLoading = false);
+    this.isLoading = true;
+    this.hostsService.powerOnHost(body).pipe(
+      switchMap(() => of(this.messageService.showSuccess(`Pomyslnie zarezerwowano stacje ${body.hostName}!`))),
+      catchError(err => of(this.messageService.showError(err))
+      ),
+      finalize(() => this.isLoading = false)).subscribe();
 
     this.displayModal = false;
   }
