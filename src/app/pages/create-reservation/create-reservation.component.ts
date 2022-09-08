@@ -53,7 +53,7 @@ export class CreateReservationComponent implements OnInit {
     this.isLoading = true;
     this.hostsService.powerOnHost(body).pipe(
       switchMap(() => of(this.messageService.showSuccess(`Pomyslnie zarezerwowano stacje ${body.hostName}!`))),
-      catchError(err => of(this.messageService.showError(err))
+      catchError(err => of(this.messageService.showError(err.message))
       ),
       finalize(() => this.isLoading = false)).subscribe();
 

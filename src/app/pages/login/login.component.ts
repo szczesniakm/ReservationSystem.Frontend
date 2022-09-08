@@ -37,9 +37,9 @@ export class LoginComponent {
     try {
       await this.authenticationService.login(this.username.value, this.password.value);
       this.router.navigateByUrl('');
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      this.messageService.showError("error");
+      this.messageService.showError(error.message);
     }
   }
 }
