@@ -31,7 +31,7 @@ export class AvaliableHostsListComponent implements OnInit {
   }
 
   isHostUnknown(host: Host): boolean {
-    return !this.isHostSleep(host) || !this.isHostTurnOn(host) || !this.isHostTurnOff(host);
+    return !this.isHostSleep(host) && !this.isHostTurnOn(host) && !this.isHostTurnOff(host);
   }
 
   isHostSleep(host: Host): boolean {
